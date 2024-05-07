@@ -43,7 +43,7 @@ public:
   bool     begin();
   bool     isConnected();
   void     reset();
-
+  void     intEnable();
   //  EXPERIMENTAL
   //  calibrate needs to be called to compensate for errors.
   //  must be called after setAccelSensitivity(as); and setGyroSensitivity(gs);
@@ -87,6 +87,11 @@ public:
   float    getAccelX()   { return _ax; };
   float    getAccelY()   { return _ay; };
   float    getAccelZ()   { return _az; };
+  
+  int    getAccelX_raw()   { return _ax_raw; };
+  int    getAccelY_raw()   { return _ay_raw; };
+  int    getAccelZ_raw()   { return _az_raw; };
+  
   float    getAngleX()   { return _aax; };
   float    getAngleY()   { return _aay; };
   float    getAngleZ()   { return _aaz; };
@@ -131,6 +136,7 @@ private:
   uint8_t  _afs = 0;                //  sensitivity factor
   float    _raw2g = GY521_RAW2G;    //  raw data to gravity g's
   float    _ax, _ay, _az;           //  accelerometer raw
+  int      _ax_raw,_ay_raw,_az_raw; 
   float    _aax, _aay, _aaz;        //  accelerometer processed
 
   uint8_t  _gfs = 0;

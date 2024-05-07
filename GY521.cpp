@@ -65,6 +65,12 @@ void GY521::reset()
   _yaw   = 0;
 }
 
+void GY521::intEnable()
+{
+  setRegister(GY521_INT_ENABLE, 0x01); // DATA_RDY_EN
+  setRegister(GY521_INT_PIN_CFG,0x20); // LATCH_INT_EN
+  
+}
 
 void GY521::calibrate(uint16_t times)
 {
@@ -140,9 +146,9 @@ int16_t GY521::read()
     return _error;
   }
   //  ACCELEROMETER
-  _ax = _WireRead2();           //  ACCEL_XOUT_H  ACCEL_XOUT_L
-  _ay = _WireRead2();           //  ACCEL_YOUT_H  ACCEL_YOUT_L
-  _az = _WireRead2();           //  ACCEL_ZOUT_H  ACCEL_ZOUT_L
+  _ax = _ax_raw = _WireRead2();           //  ACCEL_XOUT_H  ACCEL_XOUT_L
+  _ay = _ay_raw =_WireRead2();           //  ACCEL_YOUT_H  ACCEL_YOUT_L
+  _az = _az_raw =_WireRead2();           //  ACCEL_ZOUT_H  ACCEL_ZOUT_L
   //  TEMPERATURE
   _temperature = _WireRead2();  //  TEMP_OUT_H    TEMP_OUT_L
   //  GYROSCOPE
