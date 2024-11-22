@@ -72,6 +72,11 @@ void GY521::intEnable()
   
 }
 
+ void GY521::accUpdateRate(t_acc_odr rate)
+ {
+ setRegister(GY521_SMPLRT_DIV, rate);
+ }
+ 
 void GY521::calibrate(uint16_t times)
 {
   //  disable throttling / caching of read values.
@@ -152,9 +157,9 @@ int16_t GY521::read()
   //  TEMPERATURE
   _temperature = _WireRead2();  //  TEMP_OUT_H    TEMP_OUT_L
   //  GYROSCOPE
-  _gx = _WireRead2();           //  GYRO_XOUT_H   GYRO_XOUT_L
-  _gy = _WireRead2();           //  GYRO_YOUT_H   GYRO_YOUT_L
-  _gz = _WireRead2();           //  GYRO_ZOUT_H   GYRO_ZOUT_L
+  _gx = _gx_raw = _WireRead2();           //  GYRO_XOUT_H   GYRO_XOUT_L
+  _gy = _gy_raw = _WireRead2();           //  GYRO_YOUT_H   GYRO_YOUT_L
+  _gz = _gz_raw = _WireRead2();           //  GYRO_ZOUT_H   GYRO_ZOUT_L
 
   //  duration interval
   now = micros();

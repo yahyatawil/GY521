@@ -33,6 +33,21 @@
 #define GY521_RAW2DPS              (1.0 / 131.0)
 #define GY521_RAW2G                (1.0 / 16384.0)
 
+typedef enum {
+ACC_1000_HZ_ODR = 0x00, //8k gyro
+ACC_500_HZ_ODR = 0x01, // 4k
+ACC_250_HZ_ODR = 0x02, // 2k
+ACC_125_HZ_ODR = 0x03, // 1k
+ACC_62_HZ_ODR = 0x04, // 500hz
+ACC_31_HZ_ODR = 0x05, // 250hz
+ACC_15_HZ_ODR = 0x06, // 125hz
+ACC_7_HZ_ODR = 0x07, // 62hz
+ACC_3_5_HZ_ODR = 0x08, // 31hz
+ACC_1_5_HZ_ODR = 0x09, // 15hz
+ACC_0_7_HZ_ODR = 0x0A, // 7hz
+ACC_0_3_HZ_ODR = 0x0B, // 3.5hz
+ACC_0_1_HZ_ODR = 0x0C // 1.5 hz
+} t_acc_odr;
 
 class GY521
 {
@@ -44,6 +59,7 @@ public:
   bool     isConnected();
   void     reset();
   void     intEnable();
+  void     accUpdateRate(t_acc_odr rate);
   //  EXPERIMENTAL
   //  calibrate needs to be called to compensate for errors.
   //  must be called after setAccelSensitivity(as); and setGyroSensitivity(gs);
@@ -92,6 +108,11 @@ public:
   int    getAccelY_raw()   { return _ay_raw; };
   int    getAccelZ_raw()   { return _az_raw; };
   
+  int    getGyroX_raw()   { return _gx_raw; };
+  int    getGyroY_raw()   { return _gy_raw; };
+  int    getGyroZ_raw()   { return _gz_raw; };
+  
+  
   float    getAngleX()   { return _aax; };
   float    getAngleY()   { return _aay; };
   float    getAngleZ()   { return _aaz; };
@@ -137,6 +158,7 @@ private:
   float    _raw2g = GY521_RAW2G;    //  raw data to gravity g's
   float    _ax, _ay, _az;           //  accelerometer raw
   int      _ax_raw,_ay_raw,_az_raw; 
+  int      _gx_raw,_gy_raw,_gz_raw; 
   float    _aax, _aay, _aaz;        //  accelerometer processed
 
   uint8_t  _gfs = 0;
