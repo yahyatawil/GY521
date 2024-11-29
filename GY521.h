@@ -59,6 +59,7 @@ public:
   bool     isConnected();
   void     reset();
   void     intEnable();
+  uint8_t intStatus();
   void     accUpdateRate(t_acc_odr rate);
   //  EXPERIMENTAL
   //  calibrate needs to be called to compensate for errors.

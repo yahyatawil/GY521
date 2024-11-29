@@ -68,8 +68,14 @@ void GY521::reset()
 void GY521::intEnable()
 {
   setRegister(GY521_INT_ENABLE, 0x01); // DATA_RDY_EN
-  setRegister(GY521_INT_PIN_CFG,0x20); // LATCH_INT_EN
+  setRegister(GY521_INT_PIN_CFG,0x00); // LATCH_INT_EN
   
+}
+
+uint8_t GY521::intStatus()
+{
+uint8_t val = getRegister(GY521_INT_STATUS);
+return val;
 }
 
  void GY521::accUpdateRate(t_acc_odr rate)
